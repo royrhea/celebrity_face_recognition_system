@@ -9,3 +9,7 @@ data/
 *.jpg
 *.png
 *.jpeg
+*.jfif
+*.webp
+*.bmp
+*.tiff
