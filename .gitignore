@@ -5,3 +5,6 @@ env/
 ENV/
 .env
 .ipynb_checkpoints/
+*.jpg
+*.png
+*.jpeg
