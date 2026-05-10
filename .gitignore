@@ -13,3 +13,4 @@ data/
 *.webp
 *.bmp
 *.tiff
+.vscode
