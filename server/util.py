@@ -24,9 +24,16 @@ def classify_image(img_base64_data,file_path=None):
             scaled_img_har.reshape(48 * 48,)
         ))
         final=combined_img.reshape(1,-1).astype(float)
+        confidence = float(round(max(__model.predict_proba(final)[0]) * 100, 2))
+
+        predicted_class = class_number_to_name(__model.predict(final)[0])
+
+        if confidence < 50:
+            predicted_class = "Can't recognize"
+
         result.append({
-            'class':class_number_to_name(__model.predict(final)[0]),
-            'confidence':float(round(max(__model.predict_proba(final)[0]) * 100, 2))   
+            'class': predicted_class,
+            'confidence': confidence
         })
     return result
 
