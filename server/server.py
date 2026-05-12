@@ -2,6 +2,7 @@ from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 import util
+import datetime
 
 app = FastAPI()
 
@@ -20,6 +21,14 @@ async def startup_event():
     util.load_saved_artifacts()
     print("Artifacts loaded successfully")
 
+@app.get("/health")
+async def health():
+    return {
+        "status": "ok",
+        "timestamp": datetime.datetime.now(
+            datetime.timezone.utc
+        ).isoformat()
+    }
 
 @app.post("/classify_image")
 async def classify_image(img_data: str = Form(...)):
