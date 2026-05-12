@@ -1,5 +1,8 @@
-PyWavelets
-opencv-python
-seaborn
 fastapi
 uvicorn
+python-multipart
+numpy
+opencv-python
+scikit-learn
+PyWavelets
+joblib

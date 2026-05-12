@@ -1,60 +1,178 @@
 # Celebrity Face Recognition System
 
-A full-stack AI-powered web application that recognizes celebrities from uploaded images using Machine Learning, FastAPI, and Next.js.
+A full-stack Machine Learning web application that detects and classifies celebrity faces from uploaded images using Computer Vision and Machine Learning techniques.
 
-The system uses Computer Vision and Logistic Regression for multi-class celebrity face classification.
+The project uses:
 
----
-
-## 🚀 Features
-
-- Celebrity face recognition
-- Image upload and prediction
-- Face detection and preprocessing
 - FastAPI backend
 - Next.js + React frontend
-- Logistic Regression model
-- Real-time prediction results
+- OpenCV Haar Cascades for face & eye detection
+- Wavelet Transform for feature extraction
+- Scikit-learn ML model for classification
 
 ---
 
-## 🛠️ Tech Stack
+# Features
 
-### Frontend
+- Upload celebrity images
+- Face detection using OpenCV
+- Eye detection validation
+- Celebrity classification
+- Confidence score prediction
+- Modern responsive UI using Tailwind CSS
+- Drag & drop image upload
+- FastAPI REST API backend
+- Real-time frontend integration
+
+---
+
+# Tech Stack
+
+## Frontend
 - Next.js
 - React
+- TypeScript
 - Tailwind CSS
 
-### Backend
+## Backend
 - FastAPI
-- Python
+- Uvicorn
 
-### ML / CV
-- Scikit-learn
+## Machine Learning / CV
 - OpenCV
 - NumPy
+- Scikit-learn
 - PyWavelets
+- Joblib
 
 ---
 
-## 📊 Model Performance
 
-| Model | Cross Validation Accuracy |
-|-------|----------------------------|
-| Logistic Regression | ~75% |
+# Backend Setup
 
-Final test accuracy: **~77%**
+## 1. Install Dependencies
+
+```bash
+pip install fastapi uvicorn python-multipart
+pip install numpy opencv-python scikit-learn pywavelets joblib
+```
+
+## 3. Start Backend Server
+
+Navigate to the server directory:
+
+```bash
+cd server
+```
+
+Run the FastAPI server:
+
+```bash
+python server.py
+```
+
+OR
+
+```bash
+uvicorn server:app --reload --port 5000
+```
+
+Backend will run on:
+
+```bash
+http://127.0.0.1:5000
+```
+
+FastAPI docs:
+
+```bash
+http://127.0.0.1:5000/docs
+```
 
 ---
 
-## 📂 Dataset
+# Frontend Setup
 
-This project uses a custom dataset created from:
+## 1. Navigate to UI Folder
 
-### Kaggle Dataset
-https://www.kaggle.com/datasets/vishesh1412/celebrity-face-image-dataset
+```bash
+cd ui
+```
 
-Used classes:
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+## 3. Run Development Server
+
+```bash
+npm run dev
+```
+
+Frontend will run on:
+
+```bash
+http://localhost:3000
+```
+
+---
+
+# API Endpoint
+
+## Classify Image
+
+### Endpoint
+
+```bash
+POST /classify_image
+```
+
+### Request
+
+FormData:
+
+```bash
+img_data
+```
+
+### Response
+
+```json
+[
+  {
+    "class": "Brad Pitt",
+    "confidence": 94.52
+  }
+]
+```
+
+---
+
+# Machine Learning Pipeline
+
+## Image Processing
+
+1. Face detection using Haar Cascade
+2. Eye detection validation
+3. Cropping facial region
+4. Resize image to 48x48
+5. Wavelet transformation
+6. Feature concatenation
+
+## Model Prediction
+
+The processed image is passed into a trained Scikit-learn classification model which predicts:
+
+- Celebrity name
+- Confidence score
+
+---
+
+# Supported Celebrities
+
+## Actors
 - Angelina Jolie
 - Scarlett Johansson
 - Brad Pitt
@@ -63,20 +181,19 @@ Used classes:
 - Megan Fox
 - Natalie Portman
 
-### Codebasics Dataset
-https://github.com/codebasics/py/tree/master/DataScience/CelebrityFaceRecognition/model/dataset
-
-Used classes:
+## Sports Personalities
 - Lionel Messi
 - Maria Sharapova
 - Roger Federer
 - Serena Williams
 - Virat Kohli
 
-The dataset was cleaned, cropped, and organized into class-wise folders.
-
-> Dataset images are not included in this repository due to size limitations.
-
 ---
+
+# Deployment
+
+Deploy on:
+
+- Render
 
 
