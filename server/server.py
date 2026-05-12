@@ -1,12 +1,20 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
-import uvicorn
 import util
 import datetime
 import os
 
+from dotenv import load_dotenv
+
+# Load .env variables
+load_dotenv()
+
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", 5000))
+
 app = FastAPI()
 
+# Enable CORS globally
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,13 +23,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# LOAD MODEL ON STARTUP
+# Load model on startup
 @app.on_event("startup")
 async def startup_event():
     print("Loading saved artifacts...")
     util.load_saved_artifacts()
     print("Artifacts loaded successfully")
 
+
+# Health Route
 @app.get("/health")
 async def health():
     return {
@@ -31,19 +41,17 @@ async def health():
         ).isoformat()
     }
 
+
+# Home Route
+@app.get("/")
+async def home():
+    return {
+        "message": "Celebrity Face Recognition API is running"
+    }
+
+
+# Prediction Route
 @app.post("/classify_image")
 async def classify_image(img_data: str = Form(...)):
     result = util.classify_image(img_data)
     return result
-
-
-if __name__ == "__main__":
-    print("Starting FastAPI server for Celebrity Image Classification...")
-
-    port = int(os.environ.get("PORT", 5000))
-
-    uvicorn.run(
-        "server:app",
-        host="0.0.0.0",
-        port=port
-    )
