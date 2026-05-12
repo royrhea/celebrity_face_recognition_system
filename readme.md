@@ -161,6 +161,16 @@ img_data
 5. Wavelet transformation
 6. Feature concatenation
 
+# Wavelet Transformation Example
+
+The model uses Wavelet Transformation for feature extraction before classification.
+
+| Original Image | Wavelet Transformed Image |
+|---|---|
+| ![](./maria_original.png) | ![](./maria_wavelet.png) |
+
+The wavelet transformed image helps the model focus on important facial features and edge patterns, improving classification accuracy.
+
 ## Model Prediction
 
 The processed image is passed into a trained Scikit-learn classification model which predicts:

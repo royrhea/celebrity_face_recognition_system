@@ -5,12 +5,7 @@ env/
 ENV/
 .env
 .ipynb_checkpoints/
-data/
-*.jpg
-*.png
-*.jpeg
-*.jfif
-*.webp
-*.bmp
-*.tiff
+dataset/
+test_images/
+test_image/
 .vscode
