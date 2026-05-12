@@ -1,5 +1,7 @@
 # Celebrity Face Recognition System
 
+🔗 **Live Demo:** https://celebrity-face-recognition-system.vercel.app
+
 A full-stack Machine Learning web application that detects and classifies celebrity faces from uploaded images using Computer Vision and Machine Learning techniques.
 
 The project uses:
