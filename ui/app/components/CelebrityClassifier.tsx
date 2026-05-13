@@ -4,8 +4,8 @@ import { useState, useRef, useCallback } from "react";
 
 const API_URL = "http://127.0.0.1:5000/classify_image";
 
-// 2MB limit
-const MAX_FILE_SIZE = 2 * 1024 * 1024;
+// 1MB limit
+const MAX_FILE_SIZE = 1 * 1024 * 1024;
 
 const CELEBRITIES = [
   { name: "Angelina Jolie", category: "Actor" },
@@ -98,7 +98,7 @@ export default function CelebrityClassifier() {
     // File size validation
     if (file.size > MAX_FILE_SIZE) {
       setError(
-        "Image exceeded 2MB limit. Please upload a smaller image."
+        "Image exceeded 1MB limit. Please upload a smaller image."
       );
 
       setImage(null);
@@ -169,7 +169,13 @@ export default function CelebrityClassifier() {
         );
       }
 
-      const data: Result[] = await res.json();
+      const data = await res.json();
+
+      if (data.error) {
+        setError(data.error);
+        setLoading(false);
+        return;
+      }
 
       if (!Array.isArray(data) || data.length === 0) {
         setError(
@@ -297,7 +303,7 @@ export default function CelebrityClassifier() {
             {/* Image Size Info */}
             <div className="flex items-center justify-between text-xs px-1">
               <p className="text-gray-500">
-                Maximum image size: 2MB
+                Maximum image size: 1MB
               </p>
 
               {fileSize && (
