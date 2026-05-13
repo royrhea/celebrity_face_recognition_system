@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from "react";
 
-const API_URL = "http://127.0.0.1:5000/classify_image";
+const API_URL = "https://celebrity-face-recognition-system.onrender.com/classify_image";
 
 // 1MB limit
 const MAX_FILE_SIZE = 1 * 1024 * 1024;
