@@ -2,7 +2,10 @@
 
 import { useState, useRef, useCallback } from "react";
 
-const API_URL = "https://celebrity-face-recognition-system.onrender.com/classify_image";
+const API_URL = "http://127.0.0.1:5000/classify_image";
+
+// 2MB limit
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
 const CELEBRITIES = [
   { name: "Angelina Jolie", category: "Actor" },
@@ -82,6 +85,7 @@ export default function CelebrityClassifier() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [fileSize, setFileSize] = useState<number | null>(null);
 
   const fileInput = useRef<HTMLInputElement>(null);
 
@@ -91,8 +95,23 @@ export default function CelebrityClassifier() {
       return;
     }
 
+    // File size validation
+    if (file.size > MAX_FILE_SIZE) {
+      setError(
+        "Image exceeded 2MB limit. Please upload a smaller image."
+      );
+
+      setImage(null);
+      setB64(null);
+      setResults(null);
+      setFileSize(null);
+
+      return;
+    }
+
     setError(null);
     setResults(null);
+    setFileSize(file.size);
 
     const reader = new FileReader();
 
@@ -152,10 +171,7 @@ export default function CelebrityClassifier() {
 
       const data: Result[] = await res.json();
 
-      if (
-        !Array.isArray(data) ||
-        data.length === 0
-      ) {
+      if (!Array.isArray(data) || data.length === 0) {
         setError(
           "No face with 2 eyes detected. Please try a clear frontal image."
         );
@@ -186,6 +202,7 @@ export default function CelebrityClassifier() {
     setB64(null);
     setResults(null);
     setError(null);
+    setFileSize(null);
 
     if (fileInput.current) {
       fileInput.current.value = "";
@@ -274,6 +291,19 @@ export default function CelebrityClassifier() {
                     JPG · PNG · WebP
                   </p>
                 </div>
+              )}
+            </div>
+
+            {/* Image Size Info */}
+            <div className="flex items-center justify-between text-xs px-1">
+              <p className="text-gray-500">
+                Maximum image size: 2MB
+              </p>
+
+              {fileSize && (
+                <p className="text-gray-400">
+                  Uploaded: {(fileSize / 1024).toFixed(0)} KB
+                </p>
               )}
             </div>
 
